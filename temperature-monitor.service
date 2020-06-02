@@ -7,7 +7,6 @@ Type=simple
 User=ubuntu
 ExecStart=/home/ubuntu/.venvs/default/bin/python /home/ubuntu/Projects/cpu_temp_monitor/cpu_temp_monitor.py -r -f 10
 Restart=on-abort
-EnvironmentFile=/etc/sysconfig/fooservice.env
 
 [Install]
 WantedBy=multi-user.target

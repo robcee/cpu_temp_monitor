@@ -1,8 +1,8 @@
 = Cpu Temperature Monitor =
 
-Simple Python app to read `/sys/class/thermal/thermal_zone0/temp` and write output to stdio or Redis server.
+Simple Python app to read `/sys/class/thermal/thermal_zone0/temp` and write output to stdio or Redis server on a Raspberry Pi running Ubuntu Server 20.04 LTS.
 
-requires Redis-py, e.g., pip install redis
+requires a running Redis server, Python 3.7+, Redis-py, e.g., pip install redis.
 
 == installation as a systemd service ==
 
@@ -18,7 +18,6 @@ Type=simple
 User=ubuntu
 ExecStart=/home/ubuntu/.venvs/default/bin/python /home/ubuntu/Projects/cpu_temp_monitor/cpu_temp_monitor.py -r -f 10
 Restart=on-abort
-EnvironmentFile=/etc/sysconfig/fooservice.env
 
 [Install]
 WantedBy=multi-user.target```
