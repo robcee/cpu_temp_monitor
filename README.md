@@ -9,7 +9,8 @@ requires a running Redis server, Python 3.7+, Redis-py, e.g., pip install redis.
 Assuming you are running this as `ubuntu` user, with a virtual environment setup under `~/.venvs/default/`, and your script is installed under `~/Projects/cpu_temp_monitor`,
 add the following to your `/etc/systemd/system` folder, name it something sensible like `temperature-monitor.service`:
 
-```[Unit]
+```
+[Unit]
 Description=Temperature Monitor Service
 After=redis-server.service
 
@@ -20,7 +21,8 @@ ExecStart=/home/ubuntu/.venvs/default/bin/python /home/ubuntu/Projects/cpu_temp_
 Restart=on-abort
 
 [Install]
-WantedBy=multi-user.target```
+WantedBy=multi-user.target
+```
 
 After installation, run `sudo systemctl daemon-reload` to pick up the changes, then `sudo systemctl start temperature-monitor.service` (assuming that's the name you gave it).
 
