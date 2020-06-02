@@ -31,6 +31,7 @@ def write_to_redis():
     temperature = get_temp()
     r = redis.Redis(host='localhost', port=6379, db=0)
     r.set(hostname + '.temperature', temperature / 1000)
+    r.set(hostname + '.temperature.time', time.time())
 
 def write_to_console():
     temperature = get_temp()
