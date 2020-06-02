@@ -1,6 +1,6 @@
 = Cpu Temperature Monitor =
 
-Simple Python app to read `/sys/class/thermal/thermal_zone0/temp` and write output to stdio or Redis server on a Raspberry Pi running Ubuntu Server 20.04 LTS.
+Simple Python app (microservice) to read `/sys/class/thermal/thermal_zone0/temp` and write output to stdio or Redis server on a Raspberry Pi running Ubuntu Server 20.04 LTS. It is intended to be run from systemd as a service.
 
 requires a running Redis server, Python 3.7+, Redis-py, e.g., pip install redis.
 
@@ -27,3 +27,7 @@ After installation, run `sudo systemctl daemon-reload` to pick up the changes, t
 You can be sure it's running by checking `sudo journalctl -u temperature-monitor`.
 
 When satisfied that everything is working as intended, you can permanently install the temperature monitor by entering `sudo systemctl enable temperature-monitor-service`.
+
+== License ==
+
+Do what you want with this.

@@ -11,7 +11,7 @@ USAGE: python cpu_temp_monitor [-r|--redis] [-f|--frequency seconds] -h|--help
 
 __author__ = "Rob Campbell"
 __version__ = "0.1.0"
-__license__ = "MIT"
+__license__ = "The Unlicense"
 
 import argparse
 import socket
