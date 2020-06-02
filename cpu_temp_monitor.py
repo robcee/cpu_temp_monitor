@@ -42,23 +42,20 @@ def main(args):
     freq = args.frequency
     scheduler = sched.scheduler()
 
+    if args.redis:
+        action = write_to_redis
+    else:
+        action = write_to_console
+
     print("cpu_temp_monitor starting up")
     print(args)
 
     # First one is free!
-    if args.redis:
-        # store values in redis
-        write_to_redis()
-    else:
-        write_to_console()
+    action()
 
     while freq > 0:
         # print("cpu_temp_monitor, scheduler loop tick")
-        if args.redis:
-            # store values in redis
-            scheduler.enter(freq, 1, write_to_redis)
-        else:
-            scheduler.enter(freq, 1, write_to_console)
+        scheduler.enter(freq, 1, action)
         
         scheduler.run()
 
