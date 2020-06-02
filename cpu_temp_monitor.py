@@ -17,6 +17,7 @@ import argparse
 import socket
 import redis
 import sched, time
+import math
 
 _cpu_temp = '/sys/class/thermal/thermal_zone0/temp'
 
@@ -24,18 +25,18 @@ def get_temp():
     with open(_cpu_temp, "r") as f:
         temp = int(f.read())
     
-    return temp
+    return temp / 1000
 
 def write_to_redis():
     hostname = socket.gethostname()
     temperature = get_temp()
     r = redis.Redis(host='localhost', port=6379, db=0)
-    r.set(hostname + '.temperature', temperature / 1000)
-    r.set(hostname + '.temperature.time', time.time())
+    r.set(hostname + '.temperature', temperature)
+    r.set(hostname + '.temperature.time', math.floor(time.time()))
 
 def write_to_console():
     temperature = get_temp()
-    print(f"{temperature / 1000}℃")
+    print(f"{temperature}℃")
 
 def main(args):
     """ Main entry point of the app """
