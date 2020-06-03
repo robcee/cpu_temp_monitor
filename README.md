@@ -26,7 +26,7 @@ WantedBy=multi-user.target
 
 After installation, run `sudo systemctl daemon-reload` to pick up the changes, then `sudo systemctl start temperature-monitor.service` (assuming that's the name you gave it).
 
-You can be sure it's running by checking `sudo journalctl -u temperature-monitor`.
+You can be sure it's running by checking `sudo systemctl status temperature-monitor` and `sudo journalctl -u temperature-monitor` for details.
 
 When satisfied that everything is working as intended, you can permanently install the temperature monitor by entering `sudo systemctl enable temperature-monitor-service`.
 
