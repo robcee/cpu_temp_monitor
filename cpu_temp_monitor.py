@@ -31,7 +31,7 @@ _cpu_temp = '/sys/class/thermal/thermal_zone0/temp'
 
 def get_uptime():
     completedProcess = subprocess.run("uptime", capture_output=True, text=True)
-    return completedProcess.stdout
+    return completedProcess.stdout.strip()
 
 def get_temp():
     with open(_cpu_temp, "r") as f:
