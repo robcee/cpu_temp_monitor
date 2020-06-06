@@ -1,7 +1,7 @@
 #!python
 
 __desc__ = """
-cpu_temp_monitor: display or store system CPU temperature on stdout or Redis.
+cpu_temp_monitor: display or store system CPU temperature on stdout or Redis at [hostname].cpu.temperature.
 
 USAGE: python cpu_temp_monitor [-r|--redis] [-f|--frequency seconds] -h|--help
 
@@ -31,8 +31,8 @@ def write_to_redis():
     hostname = socket.gethostname()
     temperature = get_temp()
     r = redis.Redis(host='localhost', port=6379, db=0)
-    r.set(hostname + '.temperature', temperature)
-    r.set(hostname + '.temperature.time', math.floor(time.time()))
+    r.set(hostname + '.cpu.temperature', temperature)
+    r.set(hostname + '.cpu.temperature.time', math.floor(time.time()))
 
 def write_to_console():
     temperature = get_temp()
