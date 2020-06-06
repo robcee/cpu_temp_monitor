@@ -1,5 +1,12 @@
 #!python
 
+
+"""
+cpu_temp_monitor: display or store system CPU temperature on stdout or Redis at [hostname].cpu.temperature.
+
+version 0.2.0: added hostname.uptime to stored information.
+"""
+
 __desc__ = """
 cpu_temp_monitor: display or store system CPU temperature on stdout or Redis at [hostname].cpu.temperature.
 
@@ -10,7 +17,7 @@ USAGE: python cpu_temp_monitor [-r|--redis] [-f|--frequency seconds] -h|--help
 """
 
 __author__ = "Rob Campbell"
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __license__ = "The Unlicense"
 
 import argparse
@@ -18,8 +25,13 @@ import socket
 import redis
 import sched, time
 import math
+import subprocess
 
 _cpu_temp = '/sys/class/thermal/thermal_zone0/temp'
+
+def get_uptime():
+    completedProcess = subprocess.run("uptime", capture_output=True, text=True)
+    return completedProcess.stdout
 
 def get_temp():
     with open(_cpu_temp, "r") as f:
@@ -30,13 +42,17 @@ def get_temp():
 def write_to_redis():
     hostname = socket.gethostname()
     temperature = get_temp()
+    uptime = get_uptime()
     r = redis.Redis(host='localhost', port=6379, db=0)
     r.set(hostname + '.cpu.temperature', temperature)
     r.set(hostname + '.cpu.temperature.time', math.floor(time.time()))
+    r.set(hostname + '.uptime', uptime)
 
 def write_to_console():
     temperature = get_temp()
+    uptime = get_uptime()
     print(f"{temperature}℃")
+    print(uptime)
 
 def main(args):
     """ Main entry point of the app """
